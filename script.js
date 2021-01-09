@@ -6,11 +6,17 @@ let latDireita = document.getElementById('latDireita')
 let numeros = document.getElementById('numeros')
 
 let etapaAtual = 0;
+let digitado = ''
 
 function iniciarEtapa() {
     let numeroHtml = ''
-    for (let i = 0; i < etapas.numeros; i++) {
-        numeroHtml += '<div class="numero"></div>'
+    for (let i = 0; i < 5; i++) {
+        if (i === 0) {
+            numeroHtml += '<div class="numero pisca"></div>'
+        } else {
+            numeroHtml += '<div class="numero"></div>'
+        }
+
     }
     let etapa = etapas[etapaAtual]
     seuVotoPara.style.display = 'none'
@@ -18,13 +24,26 @@ function iniciarEtapa() {
     infoTela.innerHTML = ''
     latDireita.innerHTML = ''
     numeros.innerHTML = numeroHtml
+}
 
-
+function atualizaInterface() {
+    alert('Finalizou o voto')
 
 }
 
 function clicou(n) {
-    alert("Clicou em " + n)
+    let lnum = document.querySelector('.numero.pisca')
+    if (lnum != null) {
+        lnum.innerHTML = n
+        digitado = `${digitado}${n}`
+
+        lnum.classList.remove('pisca')
+        if (lnum.nextElementSibling != null) {
+            lnum.nextElementSibling.classList.add('pisca')
+        } else {
+            atualizaInterface()
+        }
+    }
 }
 
 function branco() {
