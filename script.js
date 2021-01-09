@@ -7,9 +7,12 @@ let numeros = document.getElementById('numeros')
 
 let etapaAtual = 0;
 let digitado = ''
+let VotoBranco = false
 
 function iniciarEtapa() {
     let numeroHtml = ''
+    digitado = ''
+    VotoBranco = false
     for (let i = 0; i < 5; i++) {
         if (i === 0) {
             numeroHtml += '<div class="numero pisca"></div>'
@@ -27,8 +30,31 @@ function iniciarEtapa() {
 }
 
 function atualizaInterface() {
-    alert('Finalizou o voto')
+    let etapa = etapas[etapaAtual]
+    let candidato = etapa.candidatos.filter((item) => {
+        if (item.numero === digitado) {
+            return true
+        } else {
+            return false
+        }
+    })
+    if (candidato.length > 0) {
+        candidato = candidato[0]
+        infoTela.style.display = 'block'
+        seuVotoPara.style.display = 'block'
+        descricao.innerHTML = `Candidato: ${candidato.nome} </br> Partido: ${candidato.partido}`
 
+        let fotosHtml = ''
+
+        for (let i in candidato.fotos) {
+            fotosHtml += `<div class="d-1-imagem"> <img src="${candidato.fotos[i].url}" alt=""></div>`
+        }
+        latDireita.innerHTML = fotosHtml
+    } else {
+        seuVotoPara.style.display = 'block'
+        descricao.innerHTML = '<div class="aviso--grande pisca">VOTO NULO</div>'
+    }
+    console.log("Candidato", candidato)
 }
 
 function clicou(n) {
@@ -47,15 +73,26 @@ function clicou(n) {
 }
 
 function branco() {
-    alert("Clicou em branco!")
+    if (digitado === '') {
+        VotoBranco = true
+        seuVotoPara.style.display = 'block'
+        numeros.innerHTML = ''
+        descricao.innerHTML = '<div class="aviso--grande pisca">VOTO BRANCO</div>'
+    }
 }
 
 function corrige() {
-    alert("Clicou em corrige!")
+    iniciarEtapa()
 }
 
 function confirma() {
-    alert("Clicou em confirma!")
+    let etapa = etapas[etapaAtual]
+
+    if (VotoBranco === true) {
+        console.log("Confirmou")
+    } else if (digitado.length === etapa.numeros) {
+        console.log("Confirmando como " + digitado)
+    }
 }
 
 iniciarEtapa()
