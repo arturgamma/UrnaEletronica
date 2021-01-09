@@ -88,10 +88,21 @@ function corrige() {
 function confirma() {
     let etapa = etapas[etapaAtual]
 
+    let votoConfirmado = false
     if (VotoBranco === true) {
         console.log("Confirmou")
+        votoConfirmado = true
     } else if (digitado.length === etapa.numeros) {
         console.log("Confirmando como " + digitado)
+        votoConfirmado = true
+    }
+    if (votoConfirmado) {
+        etapaAtual++
+        if (etapas[etapaAtual] !== undefined) {
+            iniciarEtapa()
+        } else {
+            document.querySelector('.tela').innerHTML = '<div class="aviso--gigante pisca">Fim</div>'
+        }
     }
 }
 
