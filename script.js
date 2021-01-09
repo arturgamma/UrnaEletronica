@@ -1,0 +1,5 @@
+let seuVotoPara = document.getElementById('seuVotoPara')
+    //let cargo = document.querySelector('.d-1-2 span')
+let descricao = document.getElementById('descricao')
+let infoTela = document.getElementById('infoTela')
+let latDireita = document.getElementById('latDireita')
